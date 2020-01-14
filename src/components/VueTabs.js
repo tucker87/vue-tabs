@@ -66,7 +66,7 @@ export default {
             this.activeTabIndex = index
             let tab = this.tabs[index]
             tab.active = true
-            this.$emit('input', tab.title)
+            this.$emit('input', tab.tabId)
         },
         changeTab (oldIndex, newIndex, route) {
             let oldTab = this.tabs[oldIndex] || {}
@@ -75,7 +75,7 @@ export default {
             this.activeTabIndex = newIndex
             oldTab.active = false
             newTab.active = true
-            this.$emit('input', this.tabs[newIndex].title)
+            this.$emit('input', this.tabs[newIndex].tabId)
             this.$emit('tab-change', newIndex, newTab, oldTab)
             this.tryChangeRoute(route)
         },
@@ -104,9 +104,9 @@ export default {
         findTabAndActivate (tabNameOrIndex) {
             let indexToActivate = this.tabs.findIndex((tab, index) => tab.title === tabNameOrIndex || index === tabNameOrIndex)
             // if somehow activeTabIndex is not reflected in the actual vue-tab instance, set it.
-+           if (indexToActivate === this.activeTabIndex && !this.tabs[this.activeTabIndex].active) {
-+              this.tabs[this.activeTabIndex].active = true;
-+           }
+           if (indexToActivate === this.activeTabIndex && !this.tabs[this.activeTabIndex].active) {
+              this.tabs[this.activeTabIndex].active = true;
+           }
             if (indexToActivate !== -1) {
                 this.changeTab(this.activeTabIndex, indexToActivate)
             } else {
